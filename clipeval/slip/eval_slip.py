@@ -63,5 +63,5 @@ def parse_results(results, result_json):
     results['slip'] = avg
 
 
-def main(model, preprocess_val, tokenizer, result_json):
+def main(model, preprocess_val, tokenizer, result_json, device):
     slip_evaluate(model, preprocess_val, tokenizer, 128, result_json)

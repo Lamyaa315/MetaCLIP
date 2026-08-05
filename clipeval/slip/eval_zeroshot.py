@@ -74,7 +74,8 @@ def build_text_features(templates, labels, model, tokenizer, skip_text_projectio
 @torch.no_grad()
 def validate_zeroshot(val_loader, templates, labels, model, tokenizer, is_acc, classnorm=False):
     # switch to evaluate mode
-    model.cuda()
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = model.to(device)
     model.eval()
 
     total_top1 = 0
@@ -97,8 +98,8 @@ def validate_zeroshot(val_loader, templates, labels, model, tokenizer, is_acc, c
         else:
             raise ValueError("unknown sample type", type(samples))
 
-        images = images.cuda(non_blocking=True)
-        target = target.cuda(non_blocking=True)
+        images = images.to(device)
+        target = target.to(device)
 
         # encode images
         image_features = model.encode_image(images)

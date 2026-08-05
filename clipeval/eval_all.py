@@ -1,7 +1,7 @@
 import importlib
 import os
 import json
-
+import torch
 from pathlib import Path
 from dataclasses import dataclass
 
@@ -13,9 +13,7 @@ baselines = [
 
 
 eval_modules = [
-    ("slip", "clipeval.slip.eval_slip"),
     ("xm3600", "clipeval.xm3600.eval_xm3600"),
-    ("cvqa", "clipeval.cvqa.eval_cvqa"),
 ]
 
 
@@ -31,8 +29,10 @@ def load_model(model_name, pretrained, tokenizer_name):
         from src.mini_clip.factory import create_model_and_transforms, get_tokenizer
         model, _, preprocess_val = create_model_and_transforms(model_name, pretrained=pretrained)
         tokenizer = get_tokenizer(tokenizer_name)
-    model.cuda()
-    model.eval()
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        model = model.to(device)
+        model.eval()
+        return model, preprocess_val, tokenizer, device
     return model, preprocess_val, tokenizer
 
 
@@ -62,14 +62,19 @@ def eval_all(bench_id):
 
         if not Path(result_json).exists():
             if model is None:
-                model, preprocess_val, tokenizer = load_model(model_name, pretrained, tokenizer_name)    
-            getattr(module, "main")(model, preprocess_val, tokenizer, result_json)
+                model, preprocess_val, tokenizer, device = load_model(model_name, pretrained, tokenizer_name)    
+            getattr(module, "main")(model, preprocess_val, tokenizer, result_json, device)
 
         # dump results to `results`.
         getattr(module, "parse_results")(results, result_json)
 
     print(json.dumps(results, indent=4))
+    import pandas as pd
 
+    csv_path = f"logs/{config_name}/results.csv"
+    pd.DataFrame([results]).to_csv(csv_path, index=False)
+
+    print(f"Saved CSV to {csv_path}")
 
 if __name__ == '__main__':
 

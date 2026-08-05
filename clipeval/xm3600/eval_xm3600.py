@@ -23,7 +23,7 @@ from big_vision.evaluators.proj.image_text import image_text_retrieval
 
 data_dir = 'data/XM3600'
 
-def evaluate_xm3600(model, preprocess, tokenizer):
+def evaluate_xm3600(model, preprocess, tokenizer, device):
     LOCALES = ['ar', 'bn', 'cs', 'da', 'de', 'el', 'en', 'es', 'fa', 'fi', 'fil', 'fr', 'hi', 'hr', 'hu', 'id', 'it', 'he', 'ja', 'ko', 'mi', 'nl', 'no', 'pl', 'pt', 'quz', 'ro', 'ru', 'sv', 'sw', 'te', 'th', 'tr', 'uk', 'vi', 'zh']
 
     image_labels = []
@@ -37,12 +37,12 @@ def evaluate_xm3600(model, preprocess, tokenizer):
             image_labels.append(img_path.stem)
             if len(images) >= 128:
                 images = torch.stack(images)
-                images = images.cuda(non_blocking=True)
+                images = images.to(device)
                 image_features.append(model.encode_image(images))
                 images = []
         if len(images) > 0:
             images = torch.stack(images)
-            images = images.cuda(non_blocking=True)
+            images = images.to(device)
             image_features.append(model.encode_image(images))
             images = []
 
@@ -72,12 +72,12 @@ def evaluate_xm3600(model, preprocess, tokenizer):
                     text_ids.append(captions)
 
                     if len(text_ids) >= 128:
-                        captions = torch.cat(text_ids).to('cuda:0', non_blocking=True)
+                        captions = torch.cat(text_ids).to(device)
                         text_features.append(model.encode_text(captions))
                         text_ids = []
 
                 if len(text_ids) > 0:
-                    captions = torch.cat(text_ids).to('cuda:0', non_blocking=True)
+                    captions = torch.cat(text_ids).to(device)
                     text_features.append(model.encode_text(captions))
                     text_ids = []
 
@@ -109,8 +109,8 @@ def parse_results(results, result_json):
         results['xm3600_i2t'] = xm3600_result['avg']['img2txt']
 
 
-def main(model, preprocess_val, tokenizer, result_json):
-    eval_results = evaluate_xm3600(model, preprocess_val, tokenizer)
+def main(model, preprocess_val, tokenizer, result_json, device):
+    eval_results = evaluate_xm3600(model, preprocess_val, tokenizer, device)
     print(eval_results['avg'])
     with open(result_json, "w") as f:
         json.dump(eval_results, f)
