@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 # metaclip2_s16: a name for the baseline.
 baselines = [
-    ("metaclip2_s16", 'ViT-S-16-worldwide@WorldWideCLIP', 'metaclip2_worldwide', "facebook/xlm-v-base"),
+    ("metaclip2_l14", "ViT-L-14-worldwide@WorldWideCLIP", "metaclip2_worldwide", "facebook/xlm-v-base"),
 
 ]
 
