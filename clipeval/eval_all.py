@@ -13,7 +13,7 @@ baselines = [
 
 
 eval_modules = [
-    ("xm3600", "clipeval.xm3600.eval_xm3600"),
+    ("rocs", "clipeval.rocs.eval_rocs"),
 ]
 
 
@@ -77,15 +77,13 @@ def eval_all(bench_id):
     print(f"Saved CSV to {csv_path}")
 
 if __name__ == '__main__':
-
     import sys
-    if True:
-        if len(sys.argv) == 2:  # python clipeval/eval_all.py 0  # 0 means first eval task
-            eval_all(int(sys.argv[1]) )
+
+    if len(sys.argv) == 2:
+        eval_all(int(sys.argv[1]))
+    else:
         for bench_id in range(len(baselines)):
             eval_all(bench_id)
-    else:
-        offsets = list(range(len(baselines)))
         import os
         import submitit
         import sys
