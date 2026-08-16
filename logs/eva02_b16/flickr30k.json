@@ -1,0 +1,10 @@
+{
+    "model": "EVA02-B-16",
+    "dataset": "Flickr30K",
+    "task": "image_to_text_retrieval",
+    "R1": 86.1,
+    "R5": 96.6,
+    "R10": 98.8,
+    "n_images": 1000,
+    "n_captions": 5000
+}
