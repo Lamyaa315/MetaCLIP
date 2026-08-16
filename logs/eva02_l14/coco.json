@@ -1,0 +1,10 @@
+{
+    "model": "EVA02-L-14",
+    "dataset": "COCO",
+    "task": "image_to_text_retrieval",
+    "R1": 63.74,
+    "R5": 84.3,
+    "R10": 90.3,
+    "n_images": 5000,
+    "n_captions": 25010
+}
