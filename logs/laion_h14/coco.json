@@ -1,0 +1,10 @@
+{
+    "model": "ViT-H-14 LAION-2B",
+    "dataset": "COCO",
+    "task": "image_to_text_retrieval",
+    "R1": 65.9,
+    "R5": 86.08,
+    "R10": 91.86,
+    "n_images": 5000,
+    "n_captions": 25010
+}
