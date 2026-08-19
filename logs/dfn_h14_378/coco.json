@@ -1,0 +1,10 @@
+{
+    "model": "ViT-H-14-378 DFN5B",
+    "dataset": "COCO",
+    "task": "image_to_text_retrieval",
+    "R1": 71.84,
+    "R5": 90.46,
+    "R10": 94.92,
+    "n_images": 5000,
+    "n_captions": 25010
+}

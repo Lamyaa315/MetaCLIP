@@ -1,0 +1,10 @@
+{
+    "model": "SigLIP2 SO400M-16-384 WebLI",
+    "dataset": "Flickr30K",
+    "task": "image_to_text_retrieval",
+    "R1": 95.2,
+    "R5": 99.8,
+    "R10": 100.0,
+    "n_images": 1000,
+    "n_captions": 5000
+}

@@ -1,0 +1,10 @@
+{
+    "model": "PE-Core-L-14-336 Meta",
+    "dataset": "COCO",
+    "task": "image_to_text_retrieval",
+    "R1": 75.74,
+    "R5": 91.34,
+    "R10": 94.94,
+    "n_images": 5000,
+    "n_captions": 25010
+}

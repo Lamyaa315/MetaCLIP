@@ -1,0 +1,10 @@
+{
+    "model": "ViT-H-14-378 DFN5B",
+    "dataset": "Flickr30K",
+    "task": "image_to_text_retrieval",
+    "R1": 94.0,
+    "R5": 99.2,
+    "R10": 99.6,
+    "n_images": 1000,
+    "n_captions": 5000
+}
